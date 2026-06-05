@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Task2_Current" targetNamespace="http://example.com/task2/current">
+  <bpmn:process id="Process_Current_Sales" name="Текущий процесс обработки продаж без единого ХД" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Покупатель оформил заказ"/>
+    <bpmn:exclusiveGateway id="Gateway_Channel" name="Канал продажи"/>
+    <bpmn:task id="Task_WebOrder" name="Заказ в интернет-магазине или мобильном приложении"/>
+    <bpmn:task id="Task_OfflineOrder" name="Продажа в офлайн-магазине"/>
+    <bpmn:task id="Task_CRM" name="Передать клиента и обращение в CRM"/>
+    <bpmn:task id="Task_OneCTrade" name="Зафиксировать продажу в 1C Торговля"/>
+    <bpmn:task id="Task_WMS" name="Проверить и отгрузить товар через WMS"/>
+    <bpmn:task id="Task_Docs" name="Оформить документы в 1C Документооборот"/>
+    <bpmn:task id="Task_ManualReports" name="Собрать управленческий отчет вручную из выгрузок"/>
+    <bpmn:endEvent id="EndEvent_1" name="Продажа обработана"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Gateway_Channel"/>
+    <bpmn:sequenceFlow id="Flow_2" name="Online" sourceRef="Gateway_Channel" targetRef="Task_WebOrder"/>
+    <bpmn:sequenceFlow id="Flow_3" name="Offline" sourceRef="Gateway_Channel" targetRef="Task_OfflineOrder"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_WebOrder" targetRef="Task_CRM"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_OfflineOrder" targetRef="Task_OneCTrade"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_CRM" targetRef="Task_OneCTrade"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_OneCTrade" targetRef="Task_WMS"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_WMS" targetRef="Task_Docs"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Task_Docs" targetRef="Task_ManualReports"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_ManualReports" targetRef="EndEvent_1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Task2_Current">
+    <bpmndi:BPMNPlane id="BPMNPlane_Task2_Current" bpmnElement="Process_Current_Sales">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1"><dc:Bounds x="120" y="140" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Channel_di" bpmnElement="Gateway_Channel" isMarkerVisible="true"><dc:Bounds x="210" y="133" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WebOrder_di" bpmnElement="Task_WebOrder"><dc:Bounds x="310" y="80" width="210" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OfflineOrder_di" bpmnElement="Task_OfflineOrder"><dc:Bounds x="310" y="210" width="210" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CRM_di" bpmnElement="Task_CRM"><dc:Bounds x="570" y="80" width="190" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OneCTrade_di" bpmnElement="Task_OneCTrade"><dc:Bounds x="810" y="145" width="190" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WMS_di" bpmnElement="Task_WMS"><dc:Bounds x="1050" y="145" width="190" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Docs_di" bpmnElement="Task_Docs"><dc:Bounds x="1290" y="145" width="190" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ManualReports_di" bpmnElement="Task_ManualReports"><dc:Bounds x="1530" y="145" width="220" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1"><dc:Bounds x="1810" y="167" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="156" y="158"/><di:waypoint x="210" y="158"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="235" y="133"/><di:waypoint x="235" y="120"/><di:waypoint x="310" y="120"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="235" y="183"/><di:waypoint x="235" y="250"/><di:waypoint x="310" y="250"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="520" y="120"/><di:waypoint x="570" y="120"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="520" y="250"/><di:waypoint x="905" y="250"/><di:waypoint x="905" y="225"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="760" y="120"/><di:waypoint x="905" y="120"/><di:waypoint x="905" y="145"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1000" y="185"/><di:waypoint x="1050" y="185"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="1240" y="185"/><di:waypoint x="1290" y="185"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1480" y="185"/><di:waypoint x="1530" y="185"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="1750" y="185"/><di:waypoint x="1810" y="185"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

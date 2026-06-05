@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Task1_ETL" targetNamespace="http://example.com/task1">
+  <bpmn:process id="Process_Task1_ETL" name="Сбор и объединение данных из двух БД в ХД" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Старт"/>
+    <bpmn:task id="Task_CreateSources" name="Создать две БД-источника"/>
+    <bpmn:task id="Task_FillSources" name="Заполнить источники тестовыми данными"/>
+    <bpmn:task id="Task_CreateWarehouse" name="Создать БД хранилища данных"/>
+    <bpmn:task id="Task_NormalizeNames" name="Нормализовать ФИО"/>
+    <bpmn:task id="Task_ReadData" name="Прочитать данные из источников"/>
+    <bpmn:exclusiveGateway id="Gateway_Match" name="ФИО совпало после нормализации?"/>
+    <bpmn:task id="Task_LoadDimensions" name="Загрузить измерения ХД"/>
+    <bpmn:task id="Task_LoadFact" name="Загрузить факт участия в проекте"/>
+    <bpmn:task id="Task_LogProblem" name="Зафиксировать несопоставленную запись"/>
+    <bpmn:endEvent id="EndEvent_1" name="ХД заполнено"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_CreateSources"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_CreateSources" targetRef="Task_FillSources"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_FillSources" targetRef="Task_CreateWarehouse"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_CreateWarehouse" targetRef="Task_NormalizeNames"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_NormalizeNames" targetRef="Task_ReadData"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_ReadData" targetRef="Gateway_Match"/>
+    <bpmn:sequenceFlow id="Flow_7" name="Да" sourceRef="Gateway_Match" targetRef="Task_LoadDimensions"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_LoadDimensions" targetRef="Task_LoadFact"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Task_LoadFact" targetRef="EndEvent_1"/>
+    <bpmn:sequenceFlow id="Flow_10" name="Нет" sourceRef="Gateway_Match" targetRef="Task_LogProblem"/>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_LogProblem" targetRef="EndEvent_1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Task1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Task1" bpmnElement="Process_Task1_ETL">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1"><dc:Bounds x="150" y="120" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateSources_di" bpmnElement="Task_CreateSources"><dc:Bounds x="230" y="98" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_FillSources_di" bpmnElement="Task_FillSources"><dc:Bounds x="420" y="98" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateWarehouse_di" bpmnElement="Task_CreateWarehouse"><dc:Bounds x="630" y="98" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NormalizeNames_di" bpmnElement="Task_NormalizeNames"><dc:Bounds x="840" y="98" width="150" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ReadData_di" bpmnElement="Task_ReadData"><dc:Bounds x="1030" y="98" width="160" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Match_di" bpmnElement="Gateway_Match" isMarkerVisible="true"><dc:Bounds x="1235" y="113" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LoadDimensions_di" bpmnElement="Task_LoadDimensions"><dc:Bounds x="1330" y="60" width="160" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LoadFact_di" bpmnElement="Task_LoadFact"><dc:Bounds x="1530" y="60" width="160" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LogProblem_di" bpmnElement="Task_LogProblem"><dc:Bounds x="1330" y="190" width="170" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1"><dc:Bounds x="1740" y="115" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="186" y="138"/><di:waypoint x="230" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="380" y="138"/><di:waypoint x="420" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="590" y="138"/><di:waypoint x="630" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="800" y="138"/><di:waypoint x="840" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="990" y="138"/><di:waypoint x="1030" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="1190" y="138"/><di:waypoint x="1235" y="138"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="1260" y="113"/><di:waypoint x="1260" y="100"/><di:waypoint x="1330" y="100"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="1490" y="100"/><di:waypoint x="1530" y="100"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1690" y="100"/><di:waypoint x="1758" y="100"/><di:waypoint x="1758" y="115"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="1260" y="163"/><di:waypoint x="1260" y="230"/><di:waypoint x="1330" y="230"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11"><di:waypoint x="1500" y="230"/><di:waypoint x="1758" y="230"/><di:waypoint x="1758" y="151"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
